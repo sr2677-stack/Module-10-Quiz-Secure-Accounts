@@ -8,8 +8,14 @@ from app.main import app
 from app.database import Base, get_db
 
 TEST_DB_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost/testdb")
+if "DATABASE_URL" not in os.environ:
+    TEST_DB_URL = "sqlite:///./test.db"
 
-engine = create_engine(TEST_DB_URL)
+engine_kwargs = {}
+if TEST_DB_URL.startswith("sqlite"):
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+
+engine = create_engine(TEST_DB_URL, **engine_kwargs)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @pytest.fixture(autouse=True)
