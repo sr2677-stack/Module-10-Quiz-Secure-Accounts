@@ -6,7 +6,7 @@ docker run -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password \
   -e POSTGRES_DB=testdb -p 5432:5432 -d postgres:15
 
 export DATABASE_URL=postgresql://user:password@localhost:5432/testdb
-pip install -r requirements.txt
+pip install -r requirements.txtcx vbn
 pytest tests/ -v
 ```
 
